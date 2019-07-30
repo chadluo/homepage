@@ -1,0 +1,146 @@
+body {
+  font-family: "Iosevka", monospace;
+  text-rendering: optimizeLegibility;
+}
+
+.摸鱼 {
+  cursor: grab;
+}
+
+section {
+  max-width: 1280px;
+  margin: auto;
+}
+
+section.wide {
+  max-width: 95vw;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* searches */
+
+.searches {
+  margin-top: 10vh;
+  grid-column: 1/3;
+}
+
+.searches-major {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.searches-minor {
+  text-align: center;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+}
+
+.search {
+  text-align: center;
+}
+
+.search-minor {
+  display: inline-block;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.search input {
+  padding: 0.5em;
+}
+
+.search-minor input {
+  padding: 0.25em;
+}
+
+h1 {
+  text-align: center;
+}
+
+/* gtd */
+
+.gtd {
+  margin-top: 10vh;
+}
+
+#cleaner {
+  cursor: pointer;
+}
+
+#gtdItems-active,
+#gtdItems-inactive {
+  padding-left: 0;
+}
+
+.gtdItem {
+  list-style: none;
+}
+
+.gtdTimestamp {
+  font-style: italic;
+}
+
+.inactive {
+  color: grey;
+  text-decoration: line-through;
+}
+
+/* banner */
+
+.clickbaits {
+  max-width: 95vw;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 5vh;
+}
+
+.clickbait {
+  height: 20vh;
+  margin: 0 2px;
+}
+
+.clickbait a {
+  background-color: #fafafa;
+  font-style: oblique;
+  display: block;
+  line-height: 20vh;
+  text-align: center;
+  width: 100%;
+}
+
+.clickbait span {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 300;
+  transform: rotate(-10deg);
+}
+
+/* links */
+
+.links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+a {
+  text-decoration: none;
+  color: royalblue;
+}
+
+a:hover {
+  color: steelblue;
+  background: #eee;
+}
+
+.interspersed a {
+  margin-right: 0.5em;
+}
+
+ul {
+  padding-left: 2em;
+}
+
+li {
+  list-style: katakana-iroha;
+}

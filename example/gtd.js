@@ -1,6 +1,6 @@
 "use strict";
 
-(function() {
+(function () {
   refreshGtd();
 })();
 
@@ -18,6 +18,7 @@ function refreshGtd() {
       .join("");
   }
   addGtdItemEventListener();
+
   function renderGtdItem(item) {
     return (
       "<li class='gtdItem " +

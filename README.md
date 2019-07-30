@@ -61,3 +61,5 @@ nearest clinic right away as I did.
 New items active by default. Click on the content (not timestamp) toggles
 active/inactive. They will be reordered only when you refresh. Inactive items
 can be cleaned.
+
+![Sample](sample.png)

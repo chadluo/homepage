@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Home of all Home Pages</title>
+  <style>
+    body {
+      background-color: #fdf6e3; /* base3 */
+      color: #657b83; /* base00 */
+      font-family: "Iosevka", monospace;
+      text-rendering: optimizeLegibility;
+    }
+
+    body.animated {
+      transition: all 0.2s;
+    }
+
+    body.dark {
+      background-color: #002b36; /* base03 */
+      color: #839496; /* base0 */
+    }
+
+    input {
+      padding: 0.25em;
+    }
+
+    a {
+      color: #6c71c4; /* violet */
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #2aa198; /* cyan */
+    }
+
+    .interspersed a {
+      margin-right: 0.5em;
+    }
+
+    ul {
+      padding-left: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    li::before {
+      content: "- ";
+    }
+
+    section {
+      margin-right: auto;
+      margin-left: auto;
+      max-width: 95vw;
+    }
+
+    .摸鱼 {
+      cursor: grab;
+    }
+
+    /* searches */
+
+    .head {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 7.5vh;
+      min-height: 20vh;
+    }
+
+    .searches-major {
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .jira {
+      margin-bottom: 0.5em;
+    }
+
+    #defaultProject {
+      width: 8em;
+    }
+
+    .search-minor {
+      margin-bottom: 0.5em;
+      text-align: right;
+    }
+
+    /* gtd */
+
+    .gtdItem {
+      list-style: none;
+    }
+
+    .gtdTimestamp {
+      font-style: italic;
+    }
+
+    .inactive span {
+      color: grey;
+      text-decoration: line-through;
+    }
+
+    /* banner */
+
+    .clickbaits {
+      display: grid;
+      grid-column-gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 5vh;
+    }
+
+    .clickbait {
+      height: 25vh;
+    }
+
+    .clickbait a {
+      border: 1px solid #6c71c4; /* violet */
+      display: block;
+      height: 25vh;
+      text-align: center;
+      width: 100%;
+    }
+
+    .clickbait a:hover {
+      border-color: #2aa198; /* cyan */
+    }
+
+    .clickbait span {
+      display: block;
+      font-size: 1.25em;
+      font-weight: 300;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    /* links */
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    footer {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin: 3vh auto 0;
+      max-width: 95vw;
+    }
+
+    .peace {
+      text-align: center;
+    }
+
+    #pageGenerated {
+      text-align: right;
+    }
+  </style>
+
+  <section class="head">
+    <div class="gtd">
+      <form onsubmit="addGtdItem()">
+        <input id="gtdInbox" type="text" />
+        <input type="submit" value="Add" />
+        <a onclick="cleanInactiveGtdItems()">🧹</a>
+      </form>
+      <ul id="gtdItems-active"></ul>
+      <ul id="gtdItems-inactive"></ul>
+    </div>
+
+    <div class="searches-major">
+      <form class="jira" onsubmit="jiraSearch()">
+        <!--@formatter:off-->
+        <h1>
+          <ruby>
+            Jira
+            <rp>(</rp>
+            <rt>zilla</rt>
+            <rp>)</rp>
+          </ruby>
+        </h1>
+        <!--@formatter:on-->
+
+        <input id="defaultProject" type="text" />
+        <input id="jiraId" type="text" />
+        <input type="submit" value="GO" />
+      </form>
+      <span id="recentSearches"></span>
+    </div>
+
+    <div class="searches-minor">
+      <form class="search-minor" onsubmit="search('https://www.google.com/search?pws=0&gl=us&gws_rd=cr&q=define%20', 'word')">
+        <label for="word">Google Define</label>
+        <input id="word" type="text" placeholder="define ..." />
+        <input type="submit" value="GO" />
+      </form>
+
+      <form class="search-minor" onsubmit="search('https://alternativeto.net/browse/search?q=', 'alter')">
+        <label for="alter">AlternativeTo</label>
+        <input id="alter" type="text" />
+        <input type="submit" value="GO" />
+      </form>
+
+      <form class="search-minor" onsubmit="search('https://learnxinyminutes.com/docs/', 'lxiydoc')">
+        <label for="lxiydoc">LXIY</label>
+        <input id="lxiydoc" type="text" placeholder="where x =" />
+        <input type="submit" value="GO" />
+      </form>
+    </div>
+  </section>
+
+  <!-- prettier-ignore -->
+  <section class="clickbaits">
+    <div class="clickbait">
+      <a href="http://localhost:1234/"><span>local<br />Jenkins</span></a>
+    </div>
+    <div class="clickbait">
+      <a><span>local<br />test environment</span></a>
+    </div>
+    <div class="clickbait">
+      <a href="https://issues.apache.org/jira/projects/MNG/issues">
+        <span>JIRA<br/>board</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="links">
+    <div>
+      <h2>Current Project</h2>
+      <ul>
+        <li><a>Test Env 1</a></li>
+        <li><a>Test Env 2</a></li>
+        <li><a>Test Env 3</a></li>
+      </ul>
+      <ul>
+        <li><a>App Server Console</a></li>
+      </ul>
+      <ul>
+        <li><a href="https://issues.apache.org/jira/projects/MNG/issues?filter=-1">My other jiras</a></li>
+      </ul>
+      <a href="vscode-insiders://file/Users/Guest">VSC: your interested workspace</a>
+    </div>
+
+    <div>
+      <h2>Quick Copy</h2>
+      <ul>
+        <li><a onclick="copy(this)" data="I wish to wish the wish you wish to wish">yay</a></li>
+        <li><a onclick="copy(this)" data="but if you wish the wish the witch wishes">woo</a></li>
+        <li><a onclick="copy(this)" data="I won't wish the wish you wish to wish">gogogo</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Current Project Wiki</h2>
+      <ul>
+        <li><a>Dev Setup Guide</a></li>
+        <li><a>Definitions & Terms</a></li>
+        <li><a>Test Data</a></li>
+        <li><a>Redeploying to Test Environment</a></li>
+        <li><a>Add Complicated Test Data</a></li>
+        <li><a>File Locations</a></li>
+        <li><a>Test Environment Info</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Other Wikies</h2>
+      <ul>
+        <li><a>Dev Guide</a></li>
+        <li><a>Upgrades Guide</a></li>
+        <li><a>Release Notes</a></li>
+        <li><a>FYI</a></li>
+        <li><a>IJ</a></li>
+      </ul>
+      <ul>
+        <li><a>Term 1</a></li>
+        <li><a>Term 2</a></li>
+        <li><a>Term 3</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2><span class="摸鱼">🐟</span></h2>
+      <span class="interspersed">
+        <a href="https://hackage.haskell.org/package/base/docs/Data-List.html">Data.List</a>
+        <a href="https://hoogle.haskell.org/">Hoogle</a>
+        <a href="https://www.scala-lang.org/api/current/">ScalaDoc</a>
+        <a href="https://twitter.com/java">@java</a>
+        <a href="https://google.github.io/styleguide/">Google Style Guides</a>
+      </span>
+      <hr />
+      <span class="interspersed">
+        <a href="https://www.notion.so/">Notion</a>
+        <a href="https://github.com/explore">GitHub Explore</a>
+        <a href="https://news.ycombinator.com/">Hacker News</a>
+        <!-- <a href="ms-settings:windowsupdate">🔃</a>-->
+        <a href="http://www.bom.gov.au/products/IDR714.loop.shtml">Radar Loop</a>
+      </span>
+    </div>
+  </section>
+
+  <footer>
+    <!-- for `&#xFE0F;` see https://en.wikipedia.org/wiki/Variant_form_(Unicode) -->
+    <span class="options"><a onclick="debugLocalStorage()" title="log local storage to console">🛠&#xFE0F;</a></span>
+    <span class="peace"><a onclick="toggleLightDark()">&#9775;</a></span>
+    <span id="pageGenerated"></span>
+  </footer>
+
+  <script>
+    "use strict";
+
+    const KEY_GTD = "recentGtd";
+
+    const KEY_DEFAULT_PROJECT = "defaultProject";
+    const defaultProject = "MNG";
+
+    const KEY_JIRA_SEARCH = "recentUrls";
+
+    const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const DAY_MILLIS = 86400 * 1000;
+
+    const KEY_DARK_MODE = "darkMode";
+
+    // / /////// init
+
+    if (localStorage.getItem(KEY_DARK_MODE)) {
+      document.body.classList.add("dark");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      refreshGtd(); // fresh load
+      /* if you want you can use the relative date format as the GTD part do */
+      document.getElementById("recentSearches").innerHTML = load(KEY_JIRA_SEARCH)
+        .map(item => `<a href='${item.url}' title='last search: ${item.access || ""}'>${item.fullJiraId}</a>`)
+        .join(", ");
+      document.getElementById("defaultProject").value = localStorage.getItem(KEY_DEFAULT_PROJECT) || defaultProject;
+      document.getElementById("pageGenerated").innerText = new Date().toLocaleString();
+    });
+
+    // //////// general
+
+    function load(id) {
+      return JSON.parse(localStorage.getItem(id)) || [];
+    }
+
+    function store(id, obj) {
+      localStorage.setItem(id, JSON.stringify(obj));
+    }
+
+    function formatTimestamp(timestamp, todayBegin) {
+      return formatDate(new Date(Number(timestamp)), todayBegin);
+    }
+
+    function formatDate(date, todayBegin) {
+      const timeString = date.toLocaleTimeString();
+
+      if (date > todayBegin) return timeString;
+
+      const yesterdayBegin = todayBegin - DAY_MILLIS;
+      if (date > yesterdayBegin) return timeString + " YDA";
+
+      const lastSunday = new Date(todayBegin - DAY_MILLIS * todayBegin.getDay());
+      const weekday = WEEKDAYS[date.getDay()];
+      if (date > lastSunday) {
+        return timeString + " " + weekday;
+      } else if (date > lastSunday - 7 * DAY_MILLIS) {
+        return timeString + " last " + weekday;
+      } else {
+        return date.toLocaleString();
+      }
+    }
+
+    function toggleLightDark() {
+      /* if you add this class in raw html and turn it on, every time you open
+         the page it will gradually switch to dark mode which is annoying. now
+         only when you want to change the color it gradually does that. */
+      document.body.classList.add("animated");
+      if (document.body.classList.toggle("dark")) {
+        localStorage.setItem(KEY_DARK_MODE, "t");
+      } else {
+        localStorage.removeItem(KEY_DARK_MODE);
+      }
+    }
+
+    function copy(a) {
+      const path = a.getAttribute("data");
+      navigator.clipboard.writeText(path).then(
+        () => {
+          a.innerHTML += " copied!";
+          console.log("copied path: " + path);
+        },
+        () => {
+          alert("can't copy");
+        }
+      );
+    }
+
+    // / /////// searches
+
+    function jiraSearch() {
+      const project = document.getElementById("defaultProject").value.trim();
+      if (project) localStorage.setItem(KEY_DEFAULT_PROJECT, project);
+
+      const jiraId = document.getElementById("jiraId").value.trim();
+      /* to match both `123` and `MNG-123` with the hyphen */
+      const groups = /(\w+-)?(\d+)/.exec(jiraId);
+      /* if your input looks like a Jira id then jump, otherwise try to search
+         it. requires your Jira instance enable JQL */
+      if (!groups || !groups[2]) {
+        window.open(`https://issues.apache.org/jira/projects/MNG/issues/?jql=text ~ "${jiraId}" ORDER BY updated DESC`).focus();
+        return;
+      }
+      const fullJiraId = `${groups[1] || localStorage.getItem(KEY_DEFAULT_PROJECT) + "-" || defaultProject + "-"}${groups[2]}`;
+      const url = `https://issues.apache.org/jira/browse/${fullJiraId}`;
+      window.open(url).focus();
+      addItemToRecent(KEY_JIRA_SEARCH, {
+        fullJiraId: fullJiraId,
+        url: url,
+        access: new Date().toLocaleString("en-AU")
+      });
+
+      function addItemToRecent(itemId, newItem) {
+        const items = load(itemId);
+        const existingItem = items.findIndex(item => newItem.fullJiraId === item.fullJiraId);
+        if (existingItem >= 0) items.splice(existingItem, 1);
+        items.unshift(newItem);
+        items.splice(5);
+        store(itemId, items);
+      }
+    }
+
+    function search(baseUrl, inputId) {
+      window.open(baseUrl + document.getElementById(inputId).value.trim()).focus();
+    }
+
+    // / /////// GTD
+
+    function refreshGtd() {
+      const tasks = load(KEY_GTD);
+      const today = new Date();
+      const todayBegin = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const render = todayBegin => item =>
+        `<li id='${item.id}' class='gtdItem${item.active ? "" : " inactive"}'>
+                  <span onclick="toggleGtdItem(this)">${item.task} | ${formatTimestamp(item.id, todayBegin)}</span></li>`;
+      const renderGtdItem = render(todayBegin);
+      document.getElementById("gtdItems-active").innerHTML = tasks
+        .filter(task => task.active)
+        .map(renderGtdItem)
+        .join("");
+      document.getElementById("gtdItems-inactive").innerHTML = tasks
+        .filter(task => !task.active)
+        .map(renderGtdItem)
+        .join("");
+    }
+
+    function toggleGtdItem(span) {
+      const gtdItem = span.parentElement;
+      gtdItem.classList.toggle("inactive");
+      const tasks = load(KEY_GTD);
+      const itemId = gtdItem.id;
+      const i = tasks.findIndex(task => task.id === itemId);
+      tasks[i].active = !tasks[i].active;
+      store(KEY_GTD, tasks);
+      navigator.clipboard.writeText(tasks[i].task).then(
+        () => {},
+        () => {
+          alert("can't copy");
+        }
+      );
+    }
+
+    function addGtdItem() {
+      const tasks = load(KEY_GTD);
+      tasks.unshift({
+        id: new Date().getTime().toString(),
+        task: document.getElementById("gtdInbox").value.trim(),
+        active: true
+      });
+      store(KEY_GTD, tasks);
+    }
+
+    function cleanInactiveGtdItems() {
+      store(KEY_GTD, load(KEY_GTD).filter(e => e.active));
+      refreshGtd(); // after clean
+    }
+
+    function debugLocalStorage() {
+      console.log(KEY_GTD, JSON.stringify(JSON.parse(localStorage.getItem(KEY_GTD)), null, 2));
+      console.log(KEY_DEFAULT_PROJECT, localStorage.getItem(KEY_DEFAULT_PROJECT));
+      console.log(KEY_JIRA_SEARCH, JSON.stringify(JSON.parse(localStorage.getItem(KEY_JIRA_SEARCH)), null, 2));
+    }
+  </script>
+</html>

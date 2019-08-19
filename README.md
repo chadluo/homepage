@@ -1,5 +1,7 @@
 # Home of all homes
 
+[Example page](https://adluo.ch/homepage/example)
+
 ## Motive
 
 To sync bookmarks between all browsers.
@@ -42,6 +44,9 @@ functionalities. But every element should be swiftly and subtly reactive.
 Changing colors is good, animations might be unnecessary. Nothing should change
 its size and affect other elements under your cursor unless you expect that.
 
+But this is all personal preferences. You can just make a copy of the example
+and change whatever you like.
+
 ## What you can do with vanilla js
 
 [`navigator.clipboard`](https://developer.mozilla.org/docs/Web/API/Navigator/clipboard)
@@ -55,7 +60,7 @@ Jira searcher/opener was originally to quick open the page by Jira number, and
 later I start to record recent searches, and instead of complaining bad inputs I
 just redirected this to search query parameter. For demonstration I'm just using
 Apache's Jira. It's only concatenating url strings so it should work for other
-task management systems with tweaks. 
+task management systems with tweaks.
 
 GTD is more about balancing between how much I need something and how much does
 it cost to implement it. The active/inactive links are only rearranged when you

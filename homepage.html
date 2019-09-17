@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+<title>Home of all Home Pages</title>
+<link rel="stylesheet" href="public/style.css"/>
+
+<script defer src="public/app.js"></script>
+
+<nav>
+  <a href="#main">MAIN</a>
+  <a href="#shortcutsWin" id="showShortcutsWin">Windows</a>
+  <a href="#shortcutsMac" id="showShortcutsMac">Mac</a>
+  <a href="#gitSvn">git-svn</a>
+  <!--  <a href="http://localhost:7086">server</a>-->
+</nav>
+
+<article id="main">
+  <section class="head">
+    <div class="gtd">
+      <form id="gtdRow">
+        <input id="gtdInbox" type="text"/>
+        <input type="submit" value="Add"/>
+        <a id="cleanInactiveGtdItems">🧹</a>
+      </form>
+      <ul id="gtdItems-active"></ul>
+      <ul id="gtdItems-inactive"></ul>
+      <span id="emptyTodo" class="hidden">No todo items yet</span>
+    </div>
+
+    <div class="searches-major">
+      <form id="mainJira">
+        <input id="defaultProject" type="text"/>
+        <input id="jiraId" type="text"/>
+        <input type="submit" value="GO"/>
+      </form>
+      <ul id="recentSearches"></ul>
+    </div>
+
+    <div class="searches-minor" id="searchesMinor">
+      <form class="search-minor" baseUrl="https://alternativeto.net/browse/search?q=">
+        <label for="alter">AlternativeTo</label>
+        <input name="q" id="alter" type="text"/>
+        <input type="submit" value="GO"/>
+      </form>
+
+      <form class="search-minor" baseUrl="https://learnxinyminutes.com/docs/">
+        <label for="lxiydoc">LXIY</label>
+        <input name="q" id="lxiydoc" type="text" placeholder="where x ="/>
+        <input type="submit" value="GO"/>
+      </form>
+
+      <form class="search-minor" baseUrl="https://developer.mozilla.org/en-US/search?q=">
+        <label for="mdn">MDN</label>
+        <input name="q" id="mdn" type="text"/>
+        <input type="submit" value="GO"/>
+      </form>
+    </div>
+  </section>
+
+  <!-- prettier-ignore -->
+  <section class="clickbaits">
+    <a class="clickbait" href="http://localhost:1234/"><span>local<br/>Jenkins</span></a>
+    <a class="clickbait"><span>local<br/>test environment</span></a>
+    <a class="clickbait"><span>JIRA<br/>Sprint board</span></a>
+  </section>
+
+  <section class="links">
+    <div>
+      <h2>MAIN Project</h2>
+      <ul>
+        <li><a>Config 1</a></li>
+        <li><a>Config 2</a></li>
+        <li><a>Config 3</a></li>
+        <li><a>Config 4</a></li>
+        <li><a>Config 5</a></li>
+      </ul>
+      <ul>
+        <li><a href="vscode-insiders://file/C:/">VSC: docs</a></li>
+        <li><a href="vscode-insiders://file/C:/">VSC: logs</a></li>
+      </ul>
+      <span class="interspersed">
+          <a>Test environment 1</a>
+          <a>Test environment 2</a>
+          <a>Test environment</a>
+        </span>
+    </div>
+
+    <div>
+      <h2><a>MAIN Project Wiki</a></h2>
+      <ul>
+        <li><a>Dev Setup Guide</a></li>
+        <li><a>Definitions & Terms</a></li>
+        <li><a>Test Data</a></li>
+        <li><a>Redeploying to Test Environment</a></li>
+        <li><a>Adding Test Data</a></li>
+        <li><a>Useful links</a></li>
+        <li><a>Test Environment</a></li>
+      </ul>
+      <ul>
+        <li><a>A very important jira</a></li>
+        <li><a>Product info 1</a>, <a>Product info 2</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Other Wikies</h2>
+      <ul>
+        <li><a>Development Guide</a></li>
+        <li><a>Upgrades</a></li>
+        <li><a>Release Notes</a></li>
+        <li><a>FYI Articles</a></li>
+        <li><a>IJ Quick Guide</a></li>
+      </ul>
+      <!-- prettier-ignore -->
+      <ul>
+        <li><a>Common concept 1</a>, <a>Common concept 2</a></li>
+        <li><a>Concept 1</a></li>
+        <li><a>Concept 2</a></li>
+        <li><a>Concept 3</a></li>
+        <li><a>Concept 4</a></li>
+        <li><a>Concept 5</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Yah</h2>
+      <span class="interspersed">
+          <a>Code Review</a>
+          <a>Timesheets</a>
+          <a>Jira Profile</a>
+          <a>All my jiras</a>
+        </span>
+      <h2>Copy dirs</h2>
+      <ul id="toCopy">
+        <li><a data="data1">build dir</a></li>
+        <li><a data="data2">install dir</a></li>
+        <li><a data="data3">data dir</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2><span class="摸鱼">🐟</span></h2>
+      <span class="interspersed">
+          <a href="https://javascript.info/">JS.INFO</a>
+          <a href="https://twitter.com/java">@java</a>
+          <a href="https://hackage.haskell.org/package/base/docs/Data-List.html">Data.List</a>
+          <a href="https://hoogle.haskell.org/">Hoogle</a>
+          <a href="https://www.scala-lang.org/api/current/">ScalaDoc</a>
+          <a href="https://google.github.io/styleguide/">Google Style Guides</a>
+          <a href="https://www.rosettacode.org/wiki/Category:Solutions_by_Programming_Task">Rosetta Code Tasks</a>
+          <a href="https://github.com/explore">GitHub Explore</a>
+        </span>
+      <hr/>
+      <span class="interspersed">
+          <a href="https://www.notion.so/">Notion</a>
+          <a href="https://support.microsoft.com/help/12445">Windows Shortcuts</a>
+          <a href="https://support.apple.com/HT201236">macOS Shortcuts</a>
+          <a href="https://news.ycombinator.com/">Hacker News</a>
+          <a href="https://en.wikipedia.org/wiki/Special:Random">Wikipedia Random</a>
+          <a href="http://www.bom.gov.au/products/IDR714.loop.shtml">Radar Loop</a>
+          <a href="https://web.wechat.com/">WX</a>
+          <a href="ms-settings:windowsupdate">🔃</a>
+        </span>
+      <hr/>
+      <span class="interspersed">
+        <a href="https://goo.gl/maps/xtB3ZzQxfqAxtRaz5">Kinokuniya</a>
+        <a href="https://goo.gl/maps/7gjMUhwTDNumToMG7">Title</a>
+      </span>
+    </div>
+  </section>
+</article>
+
+<article id="shortcutsWin" class="shortcutPage"></article>
+<article id="shortcutsMac" class="shortcutPage"></article>
+
+<article id="gitSvn">
+  <dl>
+    <dt><kbd>git svn init</kbd></dt>
+    <dd>Initialize a git-svn repo</dd>
+    <dt><kbd>git svn fetch</kbd></dt>
+    <dd>Fetch SVN commits</dd>
+    <dt><kbd>git svn clone</kbd></dt>
+    <dd>Init and fetch together</dd>
+    <dt><kbd>git svn rebase</kbd></dt>
+    <dd>Update repository; require clean</dd>
+    <dt><kbd>git svn dcommit</kbd></dt>
+    <dd>Push</dd>
+    <dt><kbd>git svn find-rev</kbd></dt>
+    <dd>Finding git commit for svn revision</dd>
+    <dt><kbd>git svn info</kbd></dt>
+    <dd>Getting SVN info</dd>
+    <dt><kbd>git svn show-ignore</kbd></dt>
+    <dd>Copy SVN ignores</dd>
+  </dl>
+  <a href="https://kapeli.com/cheat_sheets/Git_Subversion.docset/Contents/Resources/Documents/index">via</a><br/>
+  <a href="https://git-scm.com/docs/git-svn">Book</a><br/>
+  <a href="https://en.m.wikibooks.org/wiki/Git/git-svn">Wikibooks</a>
+</article>
+
+<footer>
+  <span id="shortcutTip"></span>
+  <span class="peace"><a id="toggleLightDark">&#9775;</a></span>
+</footer>
+</html>

@@ -4,15 +4,16 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backup": "copy.bat && exit 0"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "acorn": "^6.3.0",
-    "eslint": "^6.3.0",
+    "eslint": "^6.5.1",
     "eslint-config-google": "^0.13.0",
-    "eslint-config-prettier": "^6.3.0",
+    "eslint-config-prettier": "^6.4.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^9.2.0",
@@ -21,7 +22,8 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "pino": "^5.13.2",
-    "pino-pretty": "^3.2.1"
+    "lowdb": "^1.0.0",
+    "morgan": "^1.9.1",
+    "pino-pretty": "^3.2.2"
   }
 }

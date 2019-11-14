@@ -1,81 +1,91 @@
 /*#region general/misc */
 
 :root {
-  --solarized-base03: #002b36;
-  --solarized-base02: #073642;
-  --solarized-base01: #586e75;
-  --solarized-base00: #657b83;
-  --solarized-base0: #839496;
-  --solarized-base1: #93a1a1;
-  --solarized-base2: #eee8d5;
-  --solarized-base3: #fdf6e3;
-  --solarized-yellow: #b58900;
-  --solarized-orange: #cb4b16;
-  --solarized-red: #dc322f;
-  --solarized-magenta: #d33682;
-  --solarized-violet: #6c71c4;
-  --solarized-blue: #268bd2;
-  --solarized-cyan: #2aa198;
-  --solarized-green: #859900;
+  /* see https://ethanschoonover.com/solarized/ */
+  /*--solarized-base03: #002b36;*/
+  /*--solarized-base02: #073642;*/
+  /*--solarized-base01: #586e75;*/
+  /*--solarized-base00: #657b83;*/
+  /*--solarized-base0: #839496;*/
+  /*--solarized-base1: #93a1a1;*/
+  /*--solarized-base2: #eee8d5;*/
+  /*--solarized-base3: #fdf6e3;*/
+  /*--solarized-yellow: #b58900;*/
+  /*--solarized-orange: #cb4b16;*/
+  /*--solarized-red: #dc322f;*/
+  /*--solarized-magenta: #d33682;*/
+  /*--solarized-violet: #6c71c4;*/
+  /*--solarized-blue: #268bd2;*/
+  /*--solarized-cyan: #2aa198;*/
+  /*--solarized-green: #859900;*/
+
+  /* see https://github.com/morhetz/gruvbox */
+  --gruvbox-dark-bg1: #3c3836;
+  --gruvbox-dark-bg: #282828;
+  --gruvbox-dark-fg2: #d5c4a1;
+  --gruvbox-dark-fg4: #a89984;
+  --gruvbox-dark-fg: #ebdbb2;
+  --gruvbox-dark-fg-blue: #83a598;
+  --gruvbox-dark-fg-yellow: #fabd2f;
+
+  --gruvbox-light-bg: #fbf1c7;
+  --gruvbox-light-bg1: #ebdbb2;
+  --gruvbox-light-fg-blue: #076678;
+  --gruvbox-light-fg2: #504945;
+  --gruvbox-light-fg4: #7c6f64;
+  --gruvbox-light-fg: #3c3836;
+  --gruvbox-light-fg-yellow: #b57614;
+
+  --my-dark-background: var(--gruvbox-dark-bg);
+  --my-dark-nav-background: var(--gruvbox-dark-bg1);
+  --my-dark-text: var(--gruvbox-dark-fg);
+  --my-dark-text-secondary: var(--gruvbox-dark-fg2);
+  --my-dark-highlight: var(--gruvbox-dark-fg-blue);
+  --my-dark-highlight2: var(--gruvbox-dark-fg-yellow);
+  --my-dark-inactive: var(--gruvbox-dark-fg4);
+
+  --my-light-background: var(--gruvbox-light-bg);
+  --my-light-nav-background: var(--gruvbox-light-bg1);
+  --my-light-text: var(--gruvbox-light-fg);
+  --my-light-text-secondary: var(--gruvbox-light-fg2);
+  --my-light-highlight: var(--gruvbox-light-fg-blue);
+  --my-light-highlight2: var(--gruvbox-light-fg-yellow);
+  --my-light-inactive: var(--gruvbox-light-fg4);
+
 }
 
 body {
-  background-color: var(--solarized-base3);
-  color: var(--solarized-base00);
-  font-family: 'Sarasa Mono HC', monospace;
+  font-family: 'Sarasa Mono CL', monospace;
   text-rendering: optimizeLegibility;
   margin: 0;
   font-size: 14px;
   font-weight: 500;
 }
 
-body.animated,
-body.animated nav {
-  transition: all 0.2s;
-}
-
-body.dark {
-  background-color: var(--solarized-base03);
-  color: var(--solarized-base0);
-}
+body.animated, body.animated nav { transition: all 0.2s; }
 
 article {
   margin: 2em;
   padding-top: 3em;
 }
 
-article:not(:target) {
-  display: none;
-}
+article:not(:target) { display: none; }
+
+section { margin: 0 auto 2em; }
+section.narrow { max-width: 1280px; }
 
 input {
-  padding: 0.25em 0.5em;
   background: transparent;
-  border: 1px solid var(--solarized-violet);
-  color: var(--solarized-base00);
-  font-family: 'Sarasa Mono HC', monospace;
+  font-family: 'Sarasa Mono CL', monospace;
+  font-weight: 500;
+  padding: 0.25em 0.5em;
 }
 
-input[type='submit'] {
-  font-weight: 600;
-}
-
-body.dark input {
-  color: var(--solarized-base0);
-}
-
-body input[type='submit'] {
-  color: var(--solarized-violet);
-}
+input[type='submit'] { font-weight: 600; }
 
 a {
-  color: var(--solarized-violet);
   cursor: pointer;
   text-decoration: none;
-}
-
-a:hover {
-  color: var(--solarized-magenta);
 }
 
 .interspersed a {
@@ -83,41 +93,83 @@ a:hover {
   margin-right: 0.5em;
 }
 
-ul {
-  padding-left: 0;
+ul { padding-left: 0; }
+li ul { padding-left: 1em; }
+li { list-style: none; }
+li::before { content: '- '; }
+
+hr {
+  border-top: 1px solid;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
 }
 
-li {
-  list-style: none;
+.摸鱼 { cursor: grab; }
+
+.hidden { display: none; }
+
+/*endregion*/
+
+/*#region colors*/
+
+body {
+  background-color: var(--my-light-background);
+  color: var(--my-light-text);
 }
 
-li::before {
-  content: '- ';
+body.dark {
+  background-color: var(--my-dark-background);
+  color: var(--my-dark-text);
 }
 
-.摸鱼 {
-  cursor: grab;
+nav { background-color: var(--my-light-nav-background); }
+body.dark nav { background-color: var(--my-dark-nav-background); }
+
+a { color: var(--my-light-highlight); }
+a:hover { color: var(--my-light-highlight2); }
+body.dark a { color: var(--my-dark-highlight); }
+body.dark a:hover { color: var(--my-dark-highlight2); }
+
+.clickbait { border-color: var(--my-light-highlight); }
+.clickbait:hover { border-color: var(--my-light-highlight2); }
+
+input {
+  border: 1px solid var(--my-light-highlight);
+  color: var(--my-light-text);
 }
 
-.hidden {
-  display: none;
+input:focus { border-color: var(--my-light-highlight2); }
+
+body.dark input {
+  border-color: var(--my-dark-highlight);
+  color: var(--my-dark-text);
 }
 
-/* #endregion */
+body.dark input:focus { border-color: var(--my-dark-highlight2); }
 
-/* #region nav/footer */
+input[type='submit'] { color: var(--my-light-highlight); }
+body.dark input[type='submit'] { color: var(--my-dark-highlight); }
+
+.secondary, li::before { color: var(--my-light-text-secondary); }
+body.dark .secondary, body.dark li::before { color: var(--my-dark-text-secondary); }
+
+hr { border-top-color: var(--my-light-text-secondary); }
+body.dark hr { border-top-color: var(--my-dark-text-secondary); }
+
+.inactive, .inactive time { color: var(--my-light-inactive); }
+body.dark .inactive, body.dark .inactive time { color: var(--my-dark-inactive); }
+
+/*endregion*/
+
+/*#region nav/footer */
 
 nav {
   position: fixed;
   top: 0;
   width: 100vw;
-  background-color: var(--solarized-base2);
   text-align: center;
   line-height: 3em;
-}
-
-body.dark nav {
-  background-color: var(--solarized-base02);
 }
 
 nav a {
@@ -126,54 +178,40 @@ nav a {
 }
 
 footer {
-  display: flex;
+  display: grid;
   margin: 2em;
+  grid-template-columns: 1fr 2fr 1fr;
 }
 
-#shortcutTip {
-  flex-grow: 1;
+#shortcutTip { text-align: center; }
+
+.peace { text-align: right; }
+
+/*#endregion*/
+
+/*#region header*/
+
+.head {
+  display: grid;
+  grid-column-gap: 1em;
+  grid-template-columns: 2fr 2fr 1fr;
+  min-height: 10em;
 }
-
-/*#endregion */
-
-/* #region header */
 
 .gtd ul,
 .searches-major ul {
   margin: 1em 0;
 }
 
-/*#endregion */
+#gtdInbox { width: 30em; }
 
-/* #region gtd */
-
-#gtdInbox {
-  width: 30em;
-}
-
-.inactive span {
-  color: grey;
+.inactive {
   text-decoration: line-through;
 }
 
-#emptyTodo {
-  font-style: italic;
-}
+#emptyTodo { font-style: italic; }
 
-/*#endregion */
-
-/* #region searches */
-
-.head {
-  display: grid;
-  grid-column-gap: 1em;
-  grid-template-columns: 3fr 2fr 2fr;
-  min-height: 10em;
-}
-
-#defaultProject {
-  width: 8em;
-}
+#defaultProject { width: 8em; }
 
 .search-minor {
   margin-bottom: 0.5em;
@@ -182,25 +220,20 @@ footer {
 
 /*#endregion */
 
-/* #region banner */
+/*#region clickbaits*/
 
 .clickbaits {
   display: grid;
   grid-column-gap: 1rem;
   grid-template-columns: repeat(3, 1fr);
-  margin: 2em 0;
 }
 
 .clickbait {
-  border: 1px solid var(--solarized-violet);
+  border: 1px solid;
   display: block;
   height: 15em;
   text-align: center;
   width: 100%;
-}
-
-.clickbait:hover {
-  border-color: var(--solarized-cyan);
 }
 
 .clickbait span {
@@ -214,16 +247,29 @@ footer {
 
 /*#endregion */
 
-/* #region links */
+/*#region links*/
+
+#guerrilla { display: flex; }
+
+#guerrilla input + input { margin-left: 1em; }
+
+#guerrilla .text { flex-grow: 1; }
+#guerrilla .link { flex-grow: 2; }
+
+#guerrillaGroup {
+  margin-top: 1em;
+  text-align: center;
+}
 
 .links {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 2em;
 }
 
 /*#endregion */
 
-/* #region shortcuts page */
+/*#region shortcuts page*/
 
 .shortcutPage {
   columns: 4;

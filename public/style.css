@@ -195,7 +195,7 @@ footer {
   display: grid;
   grid-column-gap: 1em;
   grid-template-columns: 2fr 2fr 1fr;
-  min-height: 10em;
+  min-height: 5em;
 }
 
 .gtd ul,

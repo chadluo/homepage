@@ -1,0 +1,48 @@
+### all
+
+GET http://localhost:7086/all
+
+###
+
+GET http://localhost:7086/shortcuts/win
+
+###
+
+GET http://localhost:7086/shortcuts/mac
+
+###
+
+GET http://localhost:7086/shortcut?curr=1&prev=0
+
+######################################## API2 ########################################
+
+HEAD http://localhost:7086/gtd2
+
+###
+
+GET http://localhost:7086/gtd2
+
+### gtd api2 create new
+POST http://localhost:7086/gtd2
+Content-Type: application/json
+
+{
+  "id": "1569974433941",
+  "task": "woo",
+  "active": true
+}
+
+### gtd api2 update existing
+PUT http://localhost:7086/gtd2
+Content-Type: application/json
+
+{
+  "id": "1569974433940",
+  "task": "woo",
+  "active": true
+}
+
+###
+DELETE http://localhost:7086/gtd2
+
+###

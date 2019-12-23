@@ -39,26 +39,18 @@ db.defaults({
     hackerNews: []
 }).write();
 
-const HACKER_NEWS = "https://hacker-news.firebaseio.com/v0/";
+const HACKER_NEWS_API = "https://hacker-news.firebaseio.com/v0/";
+const HACKER_NEWS_ITEM = `https://news.ycombinator.com/item?id=`;
 
 async function refreshHackerNews(limit) {
-    axios
-        .all(
-            (
-                await axios.get(`${HACKER_NEWS}/topstories.json?limitToFirst=${limit || 10}&orderBy=%22$priority%22`)
-            ).data.map(id => axios.get(`${HACKER_NEWS}/item/${id}.json`))
-        )
-        .then(
-            axios.spread((...rs) => {
-                db.update("hackerNews", () =>
-                    rs.map(r => ({
-                        title: r.data.title,
-                        url: r.data.url || `https://news.ycombinator.com/item?id=${r.data.id}`
-                    }))
-                ).write();
-                logger.info("Updated HN cache");
-            })
-        );
+    const topStoryIds = await axios.get(
+        `${HACKER_NEWS_API}/topstories.json?limitToFirst=${limit || 10}&orderBy="$priority"`
+    );
+    const topStories = await Promise.all(topStoryIds.data.map(id => axios.get(`${HACKER_NEWS_API}/item/${id}.json`)));
+    db.update("hackerNews", () =>
+        topStories.map(item => ({ title: item.data.title, url: item.data.url || `${HACKER_NEWS_ITEM}${item.data.id}` }))
+    ).write();
+    logger.info("Updated HN cache");
 }
 
 refreshHackerNews().then(); // init

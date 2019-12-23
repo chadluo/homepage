@@ -1,286 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-<title>Home of all Home Pages</title>
-<link rel="stylesheet" href="public/style.css"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Home of all Home Pages</title>
+    <link rel="stylesheet" href="public/style.css" />
 
-<script defer src="public/app.js"></script>
+    <script defer src="public/app.js"></script>
 
-<body>
+    <script>
+        const DEFAULT_PAGE = "main";
+        window.history.replaceState(null, null, `${window.location.pathname}#${DEFAULT_PAGE}`);
+        if (localStorage.getItem("darkMode")) document.body.classList.add("dark");
+    </script>
 
-<script>
-    const DEFAULT_PAGE = 'main';
-    window.history.replaceState(null, null, `${window.location.pathname}#${DEFAULT_PAGE}`);
-    if (localStorage.getItem('darkMode')) document.body.classList.add('dark');
-</script>
+    <nav>
+        <a href="#main">Main</a>
+        <a href="#shortcutsWin" id="showShortcutsWin">Windows</a>
+        <a href="#shortcutsMac" id="showShortcutsMac">Mac</a>
+        <a href="#gitSvn">git-svn</a>
+    </nav>
 
-<nav>
-    <a href="#main">Main</a>
-    <a href="#shortcutsWin" id="showShortcutsWin">Windows</a>
-    <a href="#shortcutsMac" id="showShortcutsMac">Mac</a>
-    <a href="#gitSvn">git-svn</a>
-</nav>
-
-<article id="main">
-    <section class="head">
-        <div class="gtd">
-            <form id="gtdRow">
-                <input id="gtdInbox" type="text"/>
-                <input type="submit" value="Add"/>
-                <a id="cleanInactiveGtdItems">🧹</a>
-            </form>
-            <div id="gtdItems">
-                <ul id="gtdItems-todo"></ul>
-                <ul id="gtdItems-done"></ul>
+    <article id="main">
+        <section class="head">
+            <div class="gtd">
+                <form id="gtdRow">
+                    <input id="gtdInbox" type="text" />
+                    <input type="submit" value="Add" />
+                    <a id="cleanInactiveGtdItems">🧹</a>
+                </form>
+                <div id="gtdItems">
+                    <ul id="gtdItems-todo"></ul>
+                    <ul id="gtdItems-done"></ul>
+                </div>
+                <span id="emptyTodo" class="hidden">No todo items yet</span>
             </div>
-            <span id="emptyTodo" class="hidden">No todo items yet</span>
-        </div>
 
-        <div class="searches-major">
-            <form id="jiraSearch">
-                <input id="defaultProject" type="text"/>
-                <input id="jiraId" type="text"/>
-                <input type="submit" value="GO"/>
+            <div class="searches-major">
+                <form id="jiraSearch">
+                    <input id="defaultProject" type="text" />
+                    <input id="jiraId" type="text" />
+                    <input type="submit" value="GO" />
+                </form>
+                <ul id="recentSearches"></ul>
+            </div>
+
+            <div class="searches-minor" id="searchesMinor">
+                <form class="search-minor">
+                    <label for="alter">AltTo</label>
+                    <input name="url" type="hidden" value="https://alternativeto.net/browse/search?q=" />
+                    <input name="q" id="alter" type="text" />
+                    <input type="submit" value="GO" />
+                </form>
+
+                <form class="search-minor">
+                    <label for="lxiydoc">LXIY</label>
+                    <input name="url" type="hidden" value="https://learnxinyminutes.com/docs/" />
+                    <input name="q" id="lxiydoc" type="text" placeholder="where x =" />
+                    <input type="submit" value="GO" />
+                </form>
+
+                <form class="search-minor">
+                    <label for="mdn">MDN</label>
+                    <input name="url" type="hidden" value="https://developer.mozilla.org/en-US/search?q=" />
+                    <input name="q" id="mdn" type="text" />
+                    <input type="submit" value="GO" />
+                </form>
+            </div>
+        </section>
+
+        <section class="clickbaits">
+            <a class="clickbait"><span>Jenkins</span></a>
+            <a class="clickbait"><span>Test Env</span></a>
+            <a class="clickbait"><span>Kanban</span></a>
+        </section>
+
+        <section class="narrow">
+            <form id="guerrilla">
+                <input name="g-text" class="text" type="text" placeholder="text" />
+                <input name="g-link" class="link" type="text" placeholder="link" />
+                <input type="submit" value="Add" />
             </form>
-            <ul id="recentSearches"></ul>
-        </div>
+            <div id="guerrillaGroup" class="secondary"></div>
+        </section>
 
-        <div class="searches-minor" id="searchesMinor">
-            <form class="search-minor">
-                <label for="alter">AltTo</label>
-                <input name="url" type="hidden" value="https://alternativeto.net/browse/search?q="/>
-                <input name="q" id="alter" type="text"/>
-                <input type="submit" value="GO"/>
-            </form>
+        <section class="links">
+            <div>
+                <h2>Main Project</h2>
+                <span class="interspersed"><a>Test Env 1</a><a>Test Env 2</a><a>Yet Another Test Env</a></span>
+                <ul>
+                    <li><a href="vscode-insiders://file/C:/Users/">VSC: docs</a><br /></li>
+                </ul>
+                <h2>Copy dirs</h2>
+                <ul id="toCopy">
+                    <li><a data="Data 1">Data 1</a></li>
+                    <li><a data="Data 2">Data 2</a></li>
+                    <li><a data="Data 3">Data 3</a></li>
+                </ul>
+            </div>
 
-            <form class="search-minor">
-                <label for="lxiydoc">LXIY</label>
-                <input name="url" type="hidden" value="https://learnxinyminutes.com/docs/"/>
-                <input name="q" id="lxiydoc" type="text" placeholder="where x ="/>
-                <input type="submit" value="GO"/>
-            </form>
+            <div>
+                <h2>
+                    <a>Project Wiki</a>
+                </h2>
+                <ul>
+                    <li><a>Dev Setup Guide</a></li>
+                    <li><a>Definitions & Terms</a></li>
+                    <li><a>Pipeline Data</a></li>
+                    <li><a>Common Testing</a></li>
+                    <li><a>Redeploying Test Apps to Test Env</a></li>
+                    <li><a>Adding Test Data</a></li>
+                </ul>
+                <ul>
+                    <li><a>An Important Jira</a></li>
+                    <li><a>Product 1</a>, <a>Product 2</a></li>
+                </ul>
+            </div>
 
-            <form class="search-minor">
-                <label for="mdn">MDN</label>
-                <input name="url" type="hidden" value="https://developer.mozilla.org/en-US/search?q="/>
-                <input name="q" id="mdn" type="text"/>
-                <input type="submit" value="GO"/>
-            </form>
-        </div>
-    </section>
+            <div>
+                <h2>MDN</h2>
+                <ul>
+                    <li>
+                        <a href="https://developer.mozilla.org/en-US/docs/Learn">Learn web development</a>
+                        <ul>
+                            <li>
+                                <a
+                                    href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events"
+                                    >Introduction to Events</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Manipulating_documents"
+                                    >Manipulating documents</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Fetching_data"
+                                    >Fetching data from the server</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript">Learn/JavaScript</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web">Web technology for developers</a></li>
+                    <li>
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/API">Web/API</a>
+                        <ul>
+                            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event">Event</a></li>
+                            <li>
+                                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Performance">Performance</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">Web/JavaScript</a>
+                        <ul>
+                            <li>
+                                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop"
+                                    >EventLoop</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
 
-    <!-- prettier-ignore -->
-    <section class="clickbaits">
-        <a class="clickbait"><span>Jenkins</span></a>
-        <a class="clickbait"><span>Test Env</span></a>
-        <a class="clickbait"><span>Kanban</span></a>
-    </section>
+            <div>
+                <h2>HN</h2>
+                <ul id="hackerNews"></ul>
+            </div>
 
-    <section class="narrow">
-        <form id="guerrilla">
-            <input name="g-text" class="text" type="text" placeholder="text"/>
-            <input name="g-link" class="link" type="text" placeholder="link"/>
-            <input type="submit" value="Add"/>
-        </form>
-        <div id="guerrillaGroup" class="secondary"></div>
-    </section>
+            <div>
+                <h2>
+                    <span class="摸鱼">🐟</span>
+                </h2>
+                <span class="interspersed">
+                    <a href="https://javascript.info/">JS.INFO</a>
+                    <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript">MDN Learn JS</a>
+                    <a href="https://twitter.com/java">@java</a>
+                    <a href="https://hackage.haskell.org/package/base/docs/Data-List.html">Data.List</a>
+                    <a href="https://hoogle.haskell.org/">Hoogle</a>
+                    <a href="https://www.scala-lang.org/api/current/">ScalaDoc</a>
+                    <a href="https://google.github.io/styleguide/">Google Style Guides</a>
+                    <a href="https://www.rosettacode.org/wiki/Category:Solutions_by_Programming_Task"
+                        >Rosetta Code Tasks</a
+                    >
+                    <a href="https://github.com/explore">GitHub Explore</a>
+                </span>
+                <hr />
+                <span class="interspersed">
+                    <a href="https://www.notion.so/">Notion</a>
+                    <a href="https://support.microsoft.com/help/12445">Windows Shortcuts</a>
+                    <a href="https://support.apple.com/HT201236">macOS Shortcuts</a>
+                    <a href="https://news.ycombinator.com/">Hacker News</a>
+                    <a href="https://www.ozbargain.com.au/">澳八根</a>
+                    <a href="https://en.wikipedia.org/wiki/Special:Random">Wikipedia Random</a>
+                    <a href="http://www.bom.gov.au/products/IDR714.loop.shtml">Radar Loop</a>
+                    <a href="https://web.wechat.com/">WX</a>
+                    <a href="ms-settings:windowsupdate">🔃</a>
+                </span>
+                <hr />
+                <span class="interspersed">
+                    <a href="https://goo.gl/maps/xtB3ZzQxfqAxtRaz5">Kinokuniya</a>
+                    <a href="https://goo.gl/maps/K2VDLkXaXfhrmVFf9">Title</a>
+                </span>
+            </div>
+        </section>
+    </article>
 
-    <section class="links">
-        <div>
-            <h2>Main Project</h2>
-            <span class="interspersed"><a>Test Env 1</a><a>Test Env 2</a><a>Yet Another Test Env</a></span>
-            <ul>
-                <li>
-                    <a href="vscode-insiders://file/C:/Users/">VSC: docs</a><br/>
-                </li>
-            </ul>
-            <h2>Copy dirs</h2>
-            <ul id="toCopy">
-                <li>
-                    <a data="Data 1">Data 1</a>
-                </li>
-                <li>
-                    <a data="Data 2">Data 2</a>
-                </li>
-                <li>
-                    <a data="Data 3">Data 3</a>
-                </li>
-            </ul>
-        </div>
+    <article id="shortcutsWin" class="shortcutPage"></article>
+    <article id="shortcutsMac" class="shortcutPage"></article>
 
-        <div>
-            <h2>
-                <a>Project Wiki</a>
-            </h2>
-            <ul>
-                <li>
-                    <a>Dev Setup Guide</a>
-                </li>
-                <li>
-                    <a>Definitions & Terms</a>
-                </li>
-                <li>
-                    <a>Pipeline Data</a>
-                </li>
-                <li>
-                    <a>Common Testing</a>
-                </li>
-                <li>
-                    <a>Redeploying Test Apps to Test Env</a>
-                </li>
-                <li>
-                    <a>Adding Test Data</a>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a>An Important Jira</a>
-                </li>
-                <li>
-                    <a>Product 1</a>,
-                    <a>Product 2</a>
-                </li>
-            </ul>
-        </div>
+    <article id="gitSvn">
+        <dl>
+            <dt><kbd>git svn init</kbd></dt>
+            <dd>Initialize a git-svn repo</dd>
+            <dt><kbd>git svn fetch</kbd></dt>
+            <dd>Fetch SVN commits</dd>
+            <dt><kbd>git svn clone</kbd></dt>
+            <dd>Init and fetch together</dd>
+            <dt><kbd>git svn rebase</kbd></dt>
+            <dd>Update repository; require clean</dd>
+            <dt><kbd>git svn dcommit</kbd></dt>
+            <dd>Push</dd>
+            <dt><kbd>git svn find-rev</kbd></dt>
+            <dd>Finding git commit for svn revision</dd>
+            <dt><kbd>git svn info</kbd></dt>
+            <dd>Getting SVN info</dd>
+            <dt><kbd>git svn show-ignore</kbd></dt>
+            <dd>Copy SVN ignores</dd>
+        </dl>
+        <a href="https://kapeli.com/cheat_sheets/Git_Subversion.docset/Contents/Resources/Documents/index">via</a><br />
+        <a href="https://git-scm.com/docs/git-svn">Book</a><br />
+        <a href="https://en.m.wikibooks.org/wiki/Git/git-svn">Wikibooks</a>
+    </article>
 
-        <div>
-            <h2>MDN</h2>
-            <ul>
-                <li>
-                    <a href="https://developer.mozilla.org/en-US/docs/Learn">Learn web development</a>
-                    <ul>
-                        <li>
-                            <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events">Introduction
-                                to Events</a>
-                        </li>
-                        <li>
-                            <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Manipulating_documents">Manipulating
-                                documents</a>
-                        </li>
-                        <li>
-                            <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Fetching_data">Fetching
-                                data from the server</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript">Learn/JavaScript</a>
-                </li>
-                <li>
-                    <a href="https://developer.mozilla.org/en-US/docs/Web">Web technology for developers</a>
-                </li>
-                <li>
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/API">Web/API</a>
-                    <ul>
-                        <li>
-                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event">Event</a>
-                        </li>
-                        <li>
-                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Performance">Performance</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">Web/JavaScript</a>
-                    <ul>
-                        <li>
-                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop">EventLoop</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-
-        <div>
-            <h2>HN</h2>
-            <ul id="hackerNews"></ul>
-            <!-- prettier-ignore -->
-        </div>
-
-        <div>
-            <h2>
-                <span class="摸鱼">🐟</span>
-            </h2>
-            <span class="interspersed">
-          <a href="https://javascript.info/">JS.INFO</a>
-          <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript">MDN Learn JS</a>
-          <a href="https://twitter.com/java">@java</a>
-          <a href="https://hackage.haskell.org/package/base/docs/Data-List.html">Data.List</a>
-          <a href="https://hoogle.haskell.org/">Hoogle</a>
-          <a href="https://www.scala-lang.org/api/current/">ScalaDoc</a>
-          <a href="https://google.github.io/styleguide/">Google Style Guides</a>
-          <a href="https://www.rosettacode.org/wiki/Category:Solutions_by_Programming_Task">Rosetta Code Tasks</a>
-          <a href="https://github.com/explore">GitHub Explore</a>
-        </span>
-            <hr/>
-            <span class="interspersed">
-          <a href="https://www.notion.so/">Notion</a>
-          <a href="https://support.microsoft.com/help/12445">Windows Shortcuts</a>
-          <a href="https://support.apple.com/HT201236">macOS Shortcuts</a>
-          <a href="https://news.ycombinator.com/">Hacker News</a>
-          <a href="https://www.ozbargain.com.au/">澳八根</a>
-          <a href="https://en.wikipedia.org/wiki/Special:Random">Wikipedia Random</a>
-          <a href="http://www.bom.gov.au/products/IDR714.loop.shtml">Radar Loop</a>
-          <a href="https://web.wechat.com/">WX</a>
-          <a href="ms-settings:windowsupdate">🔃</a>
-        </span>
-            <hr/>
-            <span class="interspersed">
-          <a href="https://goo.gl/maps/xtB3ZzQxfqAxtRaz5">Kinokuniya</a>
-          <a href="https://goo.gl/maps/K2VDLkXaXfhrmVFf9">Title</a>
-        </span>
-        </div>
-    </section>
-</article>
-
-<article id="shortcutsWin" class="shortcutPage"></article>
-<article id="shortcutsMac" class="shortcutPage"></article>
-
-<article id="gitSvn">
-    <dl>
-        <dt>
-            <kbd>git svn init</kbd>
-        </dt>
-        <dd>Initialize a git-svn repo</dd>
-        <dt>
-            <kbd>git svn fetch</kbd>
-        </dt>
-        <dd>Fetch SVN commits</dd>
-        <dt>
-            <kbd>git svn clone</kbd>
-        </dt>
-        <dd>Init and fetch together</dd>
-        <dt>
-            <kbd>git svn rebase</kbd>
-        </dt>
-        <dd>Update repository; require clean</dd>
-        <dt>
-            <kbd>git svn dcommit</kbd>
-        </dt>
-        <dd>Push</dd>
-        <dt>
-            <kbd>git svn find-rev</kbd>
-        </dt>
-        <dd>Finding git commit for svn revision</dd>
-        <dt>
-            <kbd>git svn info</kbd>
-        </dt>
-        <dd>Getting SVN info</dd>
-        <dt>
-            <kbd>git svn show-ignore</kbd>
-        </dt>
-        <dd>Copy SVN ignores</dd>
-    </dl>
-    <a href="https://kapeli.com/cheat_sheets/Git_Subversion.docset/Contents/Resources/Documents/index">via</a><br/>
-    <a href="https://git-scm.com/docs/git-svn">Book</a><br/>
-    <a href="https://en.m.wikibooks.org/wiki/Git/git-svn">Wikibooks</a>
-</article>
-
-<footer>
-    <span id="loadtime"></span>
-    <span id="shortcutTip"></span>
-    <span class="peace"><a id="toggleLightDark">&#9775;</a></span>
-</footer>
+    <footer>
+        <span id="loadtime"></span>
+        <span id="shortcutTip"></span>
+        <span class="peace"><a id="toggleLightDark">&#9775;</a></span>
+    </footer>
 </html>

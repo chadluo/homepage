@@ -46,3 +46,7 @@ Content-Type: application/json
 DELETE http://localhost:7086/gtd2
 
 ###
+
+GET http://localhost:7086/hn
+
+###

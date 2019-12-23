@@ -46,6 +46,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     store(KEY_JIRA_SEARCH, json["jira"]);
     store(KEY_TEMP_LINKS, json["guerrilla"]);
 
+    await refreshHackerNews();
+
     setTimeout(() => {
         const performanceEntry = window.performance.getEntriesByType("navigation")[0];
         document.getElementById("loadtime").innerText = performanceEntry.duration.toFixed(2) + "ms";
@@ -68,7 +70,7 @@ function storeRemote(lsk, endpoint) {
     const data = localStorage.getItem(lsk);
     fetch(endpoint, {
         method: "PUT",
-        headers: { "Content-Type": "application/json;charset=UTF-8" },
+        headers: {"Content-Type": "application/json;charset=UTF-8"},
         body: data
     })
         .then(console.log)
@@ -78,7 +80,7 @@ function storeRemote(lsk, endpoint) {
 function create(endpoint, datum) {
     fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json;charset=UTF-8" },
+        headers: {"Content-Type": "application/json;charset=UTF-8"},
         body: JSON.stringify(datum)
     })
         .then(console.log)
@@ -88,7 +90,7 @@ function create(endpoint, datum) {
 async function update(endpoint, data) {
     const response = await fetch(endpoint, {
         method: "PUT",
-        headers: { "Content-Type": "application/json;charset=UTF-8" },
+        headers: {"Content-Type": "application/json;charset=UTF-8"},
         body: JSON.stringify(data)
     });
     return await response.json();
@@ -324,3 +326,11 @@ function showCurrShortcutTip(prev, curr) {
 }
 
 //#endregion
+
+async function refreshHackerNews() {
+    const res = await fetch("/hn");
+    const hn = await res.json();
+    document.getElementById("hackerNews").innerHTML = hn
+        .map(i => `<li><a href="${i.url}">${i.title}</a></li>`)
+        .join("");
+}

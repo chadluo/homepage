@@ -14,6 +14,36 @@ const fs = require("fs");
 const fsp = fs.promises;
 const morgan = require("morgan");
 const express = require("express");
+const axios = require("axios").default;
+const low = require("lowdb");
+const FileSync = require("lowdb/adapters/FileSync");
+const adapter = new FileSync("data/db.json");
+const db = low(adapter);
+
+db.defaults({
+    hackerNews: []
+}).write();
+
+const HACKER_NEWS = "https://hacker-news.firebaseio.com/v0/";
+
+async function refreshHackerNews(limit) {
+    Promise.all(
+        (await axios.get(`${HACKER_NEWS}/topstories.json`)).data
+            .slice(0, limit || 10)
+            .map(id => axios.get(`${HACKER_NEWS}/item/${id}.json`))
+    ).then(promises => {
+        db.update("hackerNews", () =>
+            promises.map(i => ({
+                title: i.data.title,
+                url: i.data.url || `https://news.ycombinator.com/item?id=${i.data.id}`
+            }))
+        ).write();
+        console.log("Updated HN cache");
+    });
+}
+
+refreshHackerNews().then(); // init
+setInterval(refreshHackerNews, 60_000);
 
 const server = express();
 
@@ -114,6 +144,12 @@ async function safeRead(filePath) {
 server.get("/shortcuts/:platform", (req, res) => {
     res.set("Content-Type", "application/json");
     res.sendFile(path.join(__dirname, "assets", `shortcuts-${req.params.platform}.json`));
+});
+
+// hacker news
+
+server.get("/hn", (req, res) => {
+    res.json(db.get("hackerNews").value() || []);
 });
 
 // endregion

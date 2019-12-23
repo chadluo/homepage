@@ -42,9 +42,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderJira(json["jira"]); // from backend
     renderGuerrilla(json["guerrilla"]); // from backend
 
-    store(KEY_GTD, json["gtd"]);
-    store(KEY_JIRA_SEARCH, json["jira"]);
-    store(KEY_TEMP_LINKS, json["guerrilla"]);
+    storeLocal(KEY_GTD, json["gtd"]);
+    storeLocal(KEY_JIRA_SEARCH, json["jira"]);
+    storeLocal(KEY_TEMP_LINKS, json["guerrilla"]);
 
     await refreshHackerNews();
 
@@ -58,11 +58,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 //#region common
 
-function load(lsk) {
+function loadLocal(lsk) {
     return JSON.parse(localStorage.getItem(lsk)) || [];
 }
 
-function store(lsk, obj) {
+function storeLocal(lsk, obj) {
     localStorage.setItem(lsk, JSON.stringify(obj));
 }
 
@@ -122,12 +122,12 @@ document.getElementById("searchesMinor").addEventListener("submit", event => {
 document.getElementById("guerrilla").addEventListener("submit", event => {
     const form = event.target;
     const formData = new FormData(form);
-    const links = load(KEY_TEMP_LINKS);
+    const links = loadLocal(KEY_TEMP_LINKS);
     links.unshift({
         text: formData.get("g-text"),
         link: formData.get("g-link")
     });
-    store(KEY_TEMP_LINKS, links);
+    storeLocal(KEY_TEMP_LINKS, links);
     storeRemote(KEY_TEMP_LINKS, "/guerrilla");
 });
 
@@ -169,7 +169,7 @@ function renderJira(data) {
         }</a> ${item.notes || ""}</li>`;
     }
 
-    document.getElementById("recentSearches").innerHTML = (data || load(KEY_JIRA_SEARCH)).map(renderItem).join("");
+    document.getElementById("recentSearches").innerHTML = (data || loadLocal(KEY_JIRA_SEARCH)).map(renderItem).join("");
 }
 
 document.getElementById("jiraSearch").addEventListener("submit", () => {
@@ -192,14 +192,14 @@ document.getElementById("jiraSearch").addEventListener("submit", () => {
         access: new Date().toLocaleString(),
         notes: ""
     };
-    const items = load(KEY_JIRA_SEARCH);
+    const items = loadLocal(KEY_JIRA_SEARCH);
     const existingItem = items.findIndex(item => item.fullJiraId === fullJiraId);
     if (existingItem >= 0) {
         newItem.notes = items.splice(existingItem, 1)[0].notes;
     }
     items.unshift(newItem);
     items.splice(RECENT_JIRA_LIMIT);
-    store(KEY_JIRA_SEARCH, items);
+    storeLocal(KEY_JIRA_SEARCH, items);
     storeRemote(KEY_JIRA_SEARCH, ENDPOINT_JIRA_SEARCH);
 });
 
@@ -208,7 +208,7 @@ document.getElementById("jiraSearch").addEventListener("submit", () => {
 //#region GTD
 
 function refreshGtd(data) {
-    const tasks = data || load(KEY_GTD);
+    const tasks = data || loadLocal(KEY_GTD);
     if (tasks.length === 0) {
         document.getElementById("gtdItems-todo").innerHTML = "";
         document.getElementById("gtdItems-done").innerHTML = "";
@@ -238,11 +238,11 @@ document.getElementById("gtdItems").addEventListener("click", async event => {
     const gtdItem = target.tagName === "LI" ? target : target.tagName === "TIME" ? target.parentNode : null;
     if (!gtdItem) return;
     gtdItem.classList.toggle("inactive");
-    const tasks = load(KEY_GTD);
+    const tasks = loadLocal(KEY_GTD);
     const i = tasks.findIndex(task => task.id === gtdItem.id);
     tasks[i].todo = !tasks[i].todo;
     const res = await update(ENDPOINT_GTD, [tasks[i]]);
-    store(KEY_GTD, res);
+    storeLocal(KEY_GTD, res);
     navigator.clipboard.writeText(tasks[i].task).catch(alert);
 });
 
@@ -250,14 +250,14 @@ document.getElementById("gtdRow").addEventListener("submit", async () => {
     const taskText = document.getElementById("gtdInbox").value.trim();
     const groups = /^(\d+) (.+)/.exec(taskText);
     if (groups && groups[1] && groups[2]) {
-        const items = load(KEY_JIRA_SEARCH);
+        const items = loadLocal(KEY_JIRA_SEARCH);
         const existingItem = items.findIndex(item => item.fullJiraId.includes(groups[1]));
         /* attach to jira notes instead of GTD inbox */
         if (existingItem >= 0) {
             const item = items.splice(existingItem, 1)[0];
             item.notes = groups[2];
             items.unshift(item);
-            store(KEY_JIRA_SEARCH, items);
+            storeLocal(KEY_JIRA_SEARCH, items);
             storeRemote(KEY_JIRA_SEARCH, ENDPOINT_JIRA_SEARCH);
             return;
         }
@@ -271,14 +271,14 @@ document.getElementById("gtdRow").addEventListener("submit", async () => {
 });
 
 document.getElementById("cleanInactiveGtdItems").addEventListener("click", async () => {
-    const data = load(KEY_GTD)
+    const data = loadLocal(KEY_GTD)
         .filter(e => !e.todo)
         .map(e => {
             e.active = false;
             return e;
         });
     const gtd = await update(ENDPOINT_GTD, data);
-    store(KEY_GTD, gtd);
+    storeLocal(KEY_GTD, gtd);
     refreshGtd();
 });
 
@@ -287,7 +287,7 @@ document.getElementById("cleanInactiveGtdItems").addEventListener("click", async
 //#region links
 
 function renderGuerrilla(data) {
-    const links = data || load(KEY_TEMP_LINKS);
+    const links = data || loadLocal(KEY_TEMP_LINKS);
     document.getElementById("guerrillaGroup").innerHTML = links
         .map(link => `<a href="${link.link}">${link.text}</a>`)
         .join(" | ");

@@ -24,8 +24,8 @@
   "dependencies": {
     "axios": "^0.19.0",
     "express": "^4.17.1",
+    "express-winston": "^4.0.2",
     "lowdb": "^1.0.0",
-    "morgan": "^1.9.1",
-    "pino-pretty": "^3.5.0"
+    "winston": "^3.2.1"
   }
 }

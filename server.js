@@ -54,7 +54,7 @@ async function refreshHackerNews(limit) {
 }
 
 refreshHackerNews().then(); // init
-setInterval(refreshHackerNews, 60000);
+setInterval(refreshHackerNews, 3e5);
 
 const server = express();
 

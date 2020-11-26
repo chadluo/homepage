@@ -343,8 +343,16 @@ footer {
 
 .links {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(12, 1fr);
   grid-column-gap: 2em;
+}
+
+.links2 {
+  grid-column: span 2;
+}
+
+.links3 {
+  grid-column: span 3;
 }
 
 /*#endregion */

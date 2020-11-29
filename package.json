@@ -5,27 +5,28 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "backup": "copy.bat && exit 0"
+    "backup": "copy.bat && exit 0",
+    "update:packages": "node wipe-dependencies.js && rm -rf node_modules && npm update --save-dev && npm update --save"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "acorn": "^6.4.1",
-    "eslint": "^6.8.0",
-    "eslint-config-google": "^0.13.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-config-standard": "^13.0.1",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-node": "^9.2.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "prettier": "1.19.1"
+    "acorn": "*",
+    "eslint": "*",
+    "eslint-config-google": "*",
+    "eslint-config-prettier": "*",
+    "eslint-config-standard": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-node": "*",
+    "eslint-plugin-promise": "*",
+    "eslint-plugin-standard": "*",
+    "prettier": "*"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "express": "^4.17.1",
-    "express-winston": "^4.0.3",
-    "lowdb": "^1.0.0",
-    "winston": "^3.2.1"
+    "axios": "*",
+    "express": "*",
+    "express-winston": "*",
+    "lowdb": "*",
+    "winston": "*"
   }
 }

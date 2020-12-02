@@ -71,7 +71,7 @@ function storeRemote(lsk, endpoint) {
   fetch(endpoint, {
     method: "PUT",
     headers: { "Content-Type": "application/json;charset=UTF-8" },
-    body: data
+    body: data,
   })
     .then(console.log)
     .catch(console.log);
@@ -81,7 +81,7 @@ function create(endpoint, datum) {
   fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json;charset=UTF-8" },
-    body: JSON.stringify(datum)
+    body: JSON.stringify(datum),
   })
     .then(console.log)
     .catch(console.error);
@@ -91,7 +91,7 @@ async function update(endpoint, data) {
   const response = await fetch(endpoint, {
     method: "PUT",
     headers: { "Content-Type": "application/json;charset=UTF-8" },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
   return await response.json();
 }
@@ -105,27 +105,27 @@ document.getElementById("toggleLightDark").addEventListener("click", () => {
   }
 });
 
-document.getElementById("toCopy").addEventListener("click", async event => {
+document.getElementById("toCopy").addEventListener("click", async (event) => {
   const a = event.target;
   if (a.tagName !== "A") return;
   await navigator.clipboard.writeText(a.getAttribute("data"));
   a.innerHTML += " copied!";
 });
 
-document.getElementById("searchesMinor").addEventListener("submit", event => {
+document.getElementById("searchesMinor").addEventListener("submit", (event) => {
   const form = event.target;
   if (form.tagName !== "FORM") return;
   const formData = new FormData(form);
   window.open(formData.get("url").trim() + formData.get("q").trim()).focus();
 });
 
-document.getElementById("guerrilla").addEventListener("submit", event => {
+document.getElementById("guerrilla").addEventListener("submit", (event) => {
   const form = event.target;
   const formData = new FormData(form);
   const links = loadLocal(KEY_TEMP_LINKS);
   links.unshift({
     text: formData.get("g-text"),
-    link: formData.get("g-link")
+    link: formData.get("g-link"),
   });
   storeLocal(KEY_TEMP_LINKS, links);
   storeRemote(KEY_TEMP_LINKS, "/guerrilla");
@@ -164,8 +164,9 @@ function formatDate(date, todayBegin) {
 
 function renderJira(data) {
   function renderItem(item) {
-    return `<li><a href="${item.url}" title="last search: ${item.access || ""}">${item.fullJiraId}</a> ${item.notes ||
-      ""}</li>`;
+    return `<li><a href="${item.url}" title="last search: ${item.access || ""}">${item.fullJiraId}</a> ${
+      item.notes || ""
+    }</li>`;
   }
 
   document.getElementById("recentSearches").innerHTML = (data || loadLocal(KEY_JIRA_SEARCH)).map(renderItem).join("");
@@ -189,10 +190,10 @@ document.getElementById("jiraSearch").addEventListener("submit", () => {
     fullJiraId: fullJiraId,
     url: url,
     access: new Date().toLocaleString(),
-    notes: ""
+    notes: "",
   };
   const items = loadLocal(KEY_JIRA_SEARCH);
-  const existingItem = items.findIndex(item => item.fullJiraId === fullJiraId);
+  const existingItem = items.findIndex((item) => item.fullJiraId === fullJiraId);
   if (existingItem >= 0) {
     newItem.notes = items.splice(existingItem, 1)[0].notes;
   }
@@ -216,29 +217,29 @@ function refreshGtd(data) {
   }
   const today = new Date();
   const todayBegin = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  const render = todayBegin => item =>
+  const render = (todayBegin) => (item) =>
     `<li id="${item.id}" class="gtdItem${item.todo ? "" : " inactive"}">${
       item.task
     } <time class="secondary">${formatTimestamp(item.id, todayBegin)}</time></li>`;
   const renderGtdItem = render(todayBegin);
   document.getElementById("gtdItems-todo").innerHTML = tasks
-    .filter(task => task.todo)
+    .filter((task) => task.todo)
     .map(renderGtdItem)
     .join("");
   document.getElementById("gtdItems-done").innerHTML = tasks
-    .filter(task => !task.todo)
+    .filter((task) => !task.todo)
     .map(renderGtdItem)
     .join("");
   document.getElementById("emptyTodo").classList.add("hidden");
 }
 
-document.getElementById("gtdItems").addEventListener("click", async event => {
+document.getElementById("gtdItems").addEventListener("click", async (event) => {
   const target = event.target;
   const gtdItem = target.tagName === "LI" ? target : target.tagName === "TIME" ? target.parentNode : null;
   if (!gtdItem) return;
   gtdItem.classList.toggle("inactive");
   const tasks = loadLocal(KEY_GTD);
-  const i = tasks.findIndex(task => task.id === gtdItem.id);
+  const i = tasks.findIndex((task) => task.id === gtdItem.id);
   tasks[i].todo = !tasks[i].todo;
   const res = await update(ENDPOINT_GTD, [tasks[i]]);
   storeLocal(KEY_GTD, res);
@@ -250,7 +251,7 @@ document.getElementById("gtdRow").addEventListener("submit", async () => {
   const groups = /^(\d+) (.+)/.exec(taskText);
   if (groups && groups[1] && groups[2]) {
     const items = loadLocal(KEY_JIRA_SEARCH);
-    const existingItem = items.findIndex(item => item.fullJiraId.includes(groups[1]));
+    const existingItem = items.findIndex((item) => item.fullJiraId.includes(groups[1]));
     /* attach to jira notes instead of GTD inbox */
     if (existingItem >= 0) {
       const item = items.splice(existingItem, 1)[0];
@@ -265,14 +266,14 @@ document.getElementById("gtdRow").addEventListener("submit", async () => {
     id: new Date().getTime().toString(),
     task: taskText,
     todo: true,
-    active: true
+    active: true,
   });
 });
 
 document.getElementById("cleanInactiveGtdItems").addEventListener("click", async () => {
   const data = loadLocal(KEY_GTD)
-    .filter(e => !e.todo)
-    .map(e => {
+    .filter((e) => !e.todo)
+    .map((e) => {
       e.active = false;
       return e;
     });
@@ -288,7 +289,7 @@ document.getElementById("cleanInactiveGtdItems").addEventListener("click", async
 function renderGuerrilla(data) {
   const links = data || loadLocal(KEY_TEMP_LINKS);
   document.getElementById("guerrillaGroup").innerHTML = links
-    .map(link => `<a href="${link.link}">${link.text}</a>`)
+    .map((link) => `<a href="${link.link}">${link.text}</a>`)
     .join(" | ");
 }
 
@@ -309,7 +310,7 @@ async function renderPage(pageElementId, shortcutsEndpoint) {
   if (shortcutsMacPage.childNodes.length !== 0) return;
   const res = await fetch(shortcutsEndpoint);
   const shortcuts = await res.json();
-  shortcutsMacPage.innerHTML = "<ul>" + shortcuts.map(text => `<li>${text}</li>`).join("") + "</ul>";
+  shortcutsMacPage.innerHTML = "<ul>" + shortcuts.map((text) => `<li>${text}</li>`).join("") + "</ul>";
 }
 
 function showPrevShortcutTip(prev, curr) {
@@ -329,5 +330,9 @@ function showCurrShortcutTip(prev, curr) {
 async function refreshHackerNews() {
   const res = await fetch("/hn");
   const hn = await res.json();
-  document.getElementById("hackerNews").innerHTML = hn.map(i => `<li><a href="${i.url}">${i.title}</a></li>`).join("");
+  document.getElementById("hackerNews").innerHTML = hn
+    .map(
+      (i) => `<li><a href="${i.url}">${i.title}</a> <a href="https://news.ycombinator.com/item?id=${i.id}">…</a></li>`
+    )
+    .join("");
 }

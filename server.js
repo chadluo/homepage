@@ -24,10 +24,10 @@ const WINSTON_CONFIG = {
   transports: [new winston.transports.Console()],
   format: winston.format.combine(
     winston.format.timestamp(),
-    winston.format.printf(i => `${i.timestamp} ${i.level} | ${i.message}`)
+    winston.format.printf((i) => `${i.timestamp} ${i.level} | ${i.message}`)
   ),
   meta: false,
-  expressFormat: true
+  expressFormat: true,
 };
 const logger = winston.createLogger(WINSTON_CONFIG);
 const path = require("path");
@@ -36,7 +36,7 @@ db.defaults({
   gtd: [],
   jira: [],
   guerrilla: [],
-  hackerNews: []
+  hackerNews: [],
 }).write();
 
 const HACKER_NEWS_API = "https://hacker-news.firebaseio.com/v0/";
@@ -46,9 +46,13 @@ async function refreshHackerNews(limit) {
   const topStoryIds = await axios.get(
     `${HACKER_NEWS_API}/topstories.json?limitToFirst=${limit || 10}&orderBy="$priority"`
   );
-  const topStories = await Promise.all(topStoryIds.data.map(id => axios.get(`${HACKER_NEWS_API}/item/${id}.json`)));
+  const topStories = await Promise.all(topStoryIds.data.map((id) => axios.get(`${HACKER_NEWS_API}/item/${id}.json`)));
   db.update("hackerNews", () =>
-    topStories.map(item => ({ title: item.data.title, url: item.data.url || `${HACKER_NEWS_ITEM}${item.data.id}` }))
+    topStories.map((item) => ({
+      id: item.data.id,
+      title: item.data.title,
+      url: item.data.url || `${HACKER_NEWS_ITEM}${item.data.id}`,
+    }))
   ).write();
   logger.info("Updated HN cache");
 }
@@ -73,17 +77,12 @@ server.all("/gtd", async (req, res) => {
       res.send(db.get("gtd").value());
       break;
     case "POST": // create
-      db.get("gtd")
-        .push(payload)
-        .write();
+      db.get("gtd").push(payload).write();
       res.status(201).send();
       break;
     case "PUT": // update
-      payload.forEach(p => {
-        db.get("gtd")
-          .find({ id: p.id })
-          .assign({ todo: p.todo, active: p.active })
-          .write();
+      payload.forEach((p) => {
+        db.get("gtd").find({ id: p.id }).assign({ todo: p.todo, active: p.active }).write();
       });
       res.send(db.get("gtd").filter({ active: true }));
       break;
@@ -122,15 +121,9 @@ server.get("/all", async (req, res) => {
   const resolved = await Promise.all([
     safeRead(SHORTCUTS_WIN),
     safeRead(SHORTCUTS_MAC),
-    db
-      .get("gtd")
-      .filter({ active: true })
-      .value(),
-    db
-      .get("jira")
-      .take(5)
-      .value(),
-    db.get("guerrilla").value()
+    db.get("gtd").filter({ active: true }).value(),
+    db.get("jira").take(5).value(),
+    db.get("guerrilla").value(),
   ]);
   const winTips = JSON.parse(resolved[0]);
   const macTips = JSON.parse(resolved[1]);
@@ -140,7 +133,7 @@ server.get("/all", async (req, res) => {
     curr: tips[curr],
     gtd: resolved[2],
     jira: resolved[3],
-    guerrilla: resolved[4]
+    guerrilla: resolved[4],
   });
 });
 

@@ -172,6 +172,13 @@ body.dark a:hover {
   border-color: var(--my-light-highlight2);
 }
 
+body.dark .clickbait {
+  border-color: var(--my-dark-highlight);
+}
+body.dark .clickbait:hover {
+  border-color: var(--my-dark-highlight2);
+}
+
 input {
   border: 1px solid var(--my-light-highlight);
   color: var(--my-light-text);

@@ -81,9 +81,7 @@ server.all("/gtd", async (req, res) => {
       res.status(201).send();
       break;
     case "PUT": // update
-      payload.forEach((p) => {
-        db.get("gtd").find({ id: p.id }).assign({ todo: p.todo, active: p.active }).write();
-      });
+      payload.forEach((p) => db.get("gtd").find({ id: p.id }).assign({ todo: p.todo, active: p.active }).write());
       res.send(db.get("gtd").filter({ active: true }));
       break;
     default:

@@ -8,9 +8,9 @@
 
   <script defer src="public/app.js"></script>
 
-  <body>
+  <body class="dark">
     <script>
-      if (localStorage.getItem("darkMode")) document.body.classList.add("dark");
+      if (localStorage.getItem("darkMode") === null) document.body.classList.remove("dark");
       const DEFAULT_PAGE = "main";
       window.history.replaceState(null, null, `${window.location.pathname}#${DEFAULT_PAGE}`);
     </script>

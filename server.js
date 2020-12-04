@@ -52,6 +52,7 @@ async function refreshHackerNews(limit) {
       id: item.data.id,
       title: item.data.title,
       url: item.data.url || `${HACKER_NEWS_ITEM}${item.data.id}`,
+      descendants: item.data.descendants,
     }))
   ).write();
   logger.info("Updated HN cache");

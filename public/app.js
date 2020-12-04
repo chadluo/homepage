@@ -332,7 +332,10 @@ async function refreshHackerNews() {
   const hn = await res.json();
   document.getElementById("hackerNews").innerHTML = hn
     .map(
-      (i) => `<li><a href="${i.url}">${i.title}</a> <a href="https://news.ycombinator.com/item?id=${i.id}">…</a></li>`
+      (i) =>
+        `<li><a href="${i.url}">${i.title}</a>${
+          i.descendants ? "&nbsp;·&nbsp;" : "&nbsp;"
+        }<a href="https://news.ycombinator.com/item?id=${i.id}">${i.descendants || "…"}</a></li>`
     )
     .join("");
 }

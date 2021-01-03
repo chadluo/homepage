@@ -112,13 +112,6 @@ document.getElementById("toCopy").addEventListener("click", async (event) => {
   a.innerHTML += " copied!";
 });
 
-document.getElementById("searchesMinor").addEventListener("submit", (event) => {
-  const form = event.target;
-  if (form.tagName !== "FORM") return;
-  const formData = new FormData(form);
-  window.open(formData.get("url").trim() + formData.get("q").trim()).focus();
-});
-
 document.getElementById("guerrilla").addEventListener("submit", (event) => {
   const form = event.target;
   const formData = new FormData(form);
@@ -339,3 +332,25 @@ async function refreshHackerNews() {
     )
     .join("");
 }
+
+customElements.define(
+  "simple-search",
+  class extends HTMLElement {
+    get label() {
+      return this.getAttribute("data-label");
+    }
+    get url() {
+      return this.getAttribute("data-url");
+    }
+    constructor() {
+      super();
+      const template = document.getElementById("search-form");
+      this.append(template.content.cloneNode(true));
+      this.querySelector("label").innerText = this.label;
+      this.addEventListener("submit", () => {
+        const formData = new FormData(this.querySelector("form"));
+        window.open(this.url + formData.get("q").trim()).focus();
+      });
+    }
+  }
+);

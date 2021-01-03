@@ -48,33 +48,18 @@
         </div>
 
         <div class="searches-minor" id="searchesMinor">
-          <form class="search-minor">
-            <label for="mvnrepo">MVN Repo</label>
-            <input name="url" type="hidden" value="https://mvnrepository.com/search?q=" />
-            <input name="q" id="mvnrepo" type="text" />
-            <input type="submit" value="GO" />
-          </form>
+          <template id="search-form">
+            <form class="search-minor">
+              <label for="q"></label>
+              <input name="q" type="text" />
+              <input type="submit" value="GO" />
+            </form>
+          </template>
 
-          <form class="search-minor">
-            <label for="alter">AltTo</label>
-            <input name="url" type="hidden" value="https://alternativeto.net/browse/search?q=" />
-            <input name="q" id="alter" type="text" />
-            <input type="submit" value="GO" />
-          </form>
-
-          <form class="search-minor">
-            <label for="lxiydoc">LXIY</label>
-            <input name="url" type="hidden" value="https://learnxinyminutes.com/docs/" />
-            <input name="q" id="lxiydoc" type="text" placeholder="where x =" />
-            <input type="submit" value="GO" />
-          </form>
-
-          <form class="search-minor">
-            <label for="mdn">MDN</label>
-            <input name="url" type="hidden" value="https://developer.mozilla.org/en-US/search?q=" />
-            <input name="q" id="mdn" type="text" />
-            <input type="submit" value="GO" />
-          </form>
+          <simple-search data-label="MVN Repo" data-url="https://mvnrepository.com/search?q="></simple-search>
+          <simple-search data-label="AltTo" data-url="https://alternativeto.net/browse/search?q="></simple-search>
+          <simple-search data-label="LXIY" data-url="https://learnxinyminutes.com/docs/"></simple-search>
+          <simple-search data-label="MDN" data-url="https://developer.mozilla.org/en-US/search?q="></simple-search>
         </div>
       </section>
 

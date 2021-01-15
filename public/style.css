@@ -1,27 +1,10 @@
 /*#region general/misc */
 
 :root {
-  /* see https://ethanschoonover.com/solarized/ */
-  /*--solarized-base03: #002b36;*/
-  /*--solarized-base02: #073642;*/
-  /*--solarized-base01: #586e75;*/
-  /*--solarized-base00: #657b83;*/
-  /*--solarized-base0: #839496;*/
-  /*--solarized-base1: #93a1a1;*/
-  /*--solarized-base2: #eee8d5;*/
-  /*--solarized-base3: #fdf6e3;*/
-  /*--solarized-yellow: #b58900;*/
-  /*--solarized-orange: #cb4b16;*/
-  /*--solarized-red: #dc322f;*/
-  /*--solarized-magenta: #d33682;*/
-  /*--solarized-violet: #6c71c4;*/
-  /*--solarized-blue: #268bd2;*/
-  /*--solarized-cyan: #2aa198;*/
-  /*--solarized-green: #859900;*/
-
   /* see https://github.com/morhetz/gruvbox */
   --gruvbox-dark-bg1: #3c3836;
   --gruvbox-dark-bg: #282828;
+  --gruvbox-dark-bg0_h: #1d2021;
   --gruvbox-dark-fg2: #d5c4a1;
   --gruvbox-dark-fg4: #a89984;
   --gruvbox-dark-fg: #ebdbb2;
@@ -30,6 +13,7 @@
 
   --gruvbox-light-bg: #fbf1c7;
   --gruvbox-light-bg1: #ebdbb2;
+  --gruvbox-light-bg0_h: #f9f5d7;
   --gruvbox-light-fg-blue: #076678;
   --gruvbox-light-fg2: #504945;
   --gruvbox-light-fg4: #7c6f64;
@@ -37,6 +21,7 @@
   --gruvbox-light-fg-yellow: #b57614;
 
   --my-dark-background: var(--gruvbox-dark-bg);
+  --my-dark-input-background: var(--gruvbox-dark-bg0_h);
   --my-dark-nav-background: var(--gruvbox-dark-bg1);
   --my-dark-text: var(--gruvbox-dark-fg);
   --my-dark-text-secondary: var(--gruvbox-dark-fg2);
@@ -46,6 +31,7 @@
 
   --my-light-background: var(--gruvbox-light-bg);
   --my-light-nav-background: var(--gruvbox-light-bg1);
+  --my-light-input-background: var(--gruvbox-light-bg0_h);
   --my-light-text: var(--gruvbox-light-fg);
   --my-light-text-secondary: var(--gruvbox-light-fg2);
   --my-light-highlight: var(--gruvbox-light-fg-blue);
@@ -62,7 +48,8 @@ body {
 }
 
 body.animated,
-body.animated nav {
+body.animated nav,
+body.animated input {
   transition: all 0.2s;
 }
 
@@ -180,19 +167,24 @@ body.dark .clickbait:hover {
 }
 
 input {
-  border: 1px solid var(--my-light-highlight);
+  border: 1px solid var(--my-light-nav-background);
+  outline: none;
   color: var(--my-light-text);
+  background: var(--my-light-input-background);
 }
 
+input:hover,
 input:focus {
   border-color: var(--my-light-highlight2);
 }
 
 body.dark input {
-  border-color: var(--my-dark-highlight);
+  border-color: var(--my-dark-nav-background);
   color: var(--my-dark-text);
+  background: var(--my-dark-input-background);
 }
 
+body.dark input:hover,
 body.dark input:focus {
   border-color: var(--my-dark-highlight2);
 }

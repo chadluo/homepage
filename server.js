@@ -48,14 +48,16 @@ async function refreshHackerNews(limit) {
   );
   const topStories = await Promise.all(topStoryIds.data.map((id) => axios.get(`${HACKER_NEWS_API}/item/${id}.json`)));
   db.update("hackerNews", () =>
-    topStories.map((item) => ({
-      id: item.data.id,
-      title: item.data.title,
-      url: item.data.url || `${HACKER_NEWS_ITEM}${item.data.id}`,
-      descendants: item.data.descendants,
-    }))
+    topStories
+      .map((response) => response.data)
+      .map((item) => ({
+        id: item.id,
+        title: item.title,
+        url: item.url || `${HACKER_NEWS_ITEM}${item.id}`,
+        descendants: item.descendants,
+      }))
   ).write();
-  logger.info("Updated HN cache");
+  logger.info(`Updated HN cache: ${JSON.stringify(topStoryIds.data)}`);
 }
 
 refreshHackerNews().then(); // init
